@@ -1,21 +1,24 @@
-import { Button } from "@/components/ui/button"
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthProvider';
+import { LoginPage } from './components/LoginPage';
+import { AttendancePage } from './components/AttendancePage';
 
-export function App() {
+function App() {
+  const { isAuthenticated } = useAuth();
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
-  )
+    <Routes>
+      <Route
+        path="/login"
+        element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />}
+      />
+      <Route
+        path="/"
+        element={isAuthenticated ? <AttendancePage /> : <Navigate to="/login" replace />}
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
