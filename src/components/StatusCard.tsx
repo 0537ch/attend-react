@@ -12,7 +12,7 @@ interface StatusCardProps {
 export function StatusCard({ distance, isInRange, isLoading, radius, officeName, gpsAccuracy }: StatusCardProps) {
   if (isLoading) {
     return (
-      <div className="bg-card text-card-foreground rounded-lg p-4 border border-border">
+      <div className="animate-pulse">
         <div className="flex items-center gap-2 text-muted-foreground">
           <Loader2 className="w-5 h-5 animate-spin" />
           <span className="text-sm sm:text-base">Mendapatkan lokasi Anda...</span>
@@ -34,7 +34,14 @@ export function StatusCard({ distance, isInRange, isLoading, radius, officeName,
   };
 
   return (
-    <div className="bg-card text-card-foreground rounded-lg p-4 border border-border space-y-3">
+    <div className={`
+      rounded-lg p-4 space-y-3
+      transition-all duration-300
+      ${isInRange
+        ? 'bg-green-500/15 border border-green-500/70'
+        : 'bg-red-500/20 border border-red-500/50'
+      }
+    `}>
       {/* Distance */}
       <div className="flex items-center gap-2">
         <MapPin className="w-5 h-5 text-muted-foreground" />

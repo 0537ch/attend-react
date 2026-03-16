@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { Location } from '@/types/attendance';
 import type { OfficeLocation } from '@/types/attendance';
 import { calculateDistanceToOffice, isWithinAllowedRadius } from '@/lib/location';
@@ -28,7 +28,7 @@ export function useLocationManager(selectedOffice: OfficeLocation | null) {
     }
   }
 
-  function updateLocationState(location: Location, accuracy?: number) {
+  const updateLocationState = useCallback((location: Location, accuracy?: number) => {
     if (!selectedOffice) {
       // No office selected yet
       setUserLocation(location);
@@ -50,12 +50,15 @@ export function useLocationManager(selectedOffice: OfficeLocation | null) {
     }
     setIsLoading(false);
     setError(null);
-  }
+  }, [selectedOffice]);
 
   useEffect(() => {
     if (!hasGeolocation) {
       return;
     }
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsLoading(true);
 
     // Get initial position
     navigator.geolocation.getCurrentPosition(
@@ -74,7 +77,7 @@ export function useLocationManager(selectedOffice: OfficeLocation | null) {
       {
         enableHighAccuracy: true,
         timeout: 10000,
-        maximumAge: 0,
+        maximumAge: 10000,
       }
     );
 
@@ -94,14 +97,14 @@ export function useLocationManager(selectedOffice: OfficeLocation | null) {
       {
         enableHighAccuracy: true,
         timeout: 10000,
-        maximumAge: 5000,
+        maximumAge: 10000,
       }
     );
 
     return () => {
       navigator.geolocation.clearWatch(watchId);
     };
-  }, [hasGeolocation, selectedOffice]);
+  }, [hasGeolocation, selectedOffice, updateLocationState]);
 
   return {
     userLocation,

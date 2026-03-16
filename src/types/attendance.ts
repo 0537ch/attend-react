@@ -1,7 +1,7 @@
 export interface Location {
   lat: number;
   lng: number;
-  accuracy?: number; // GPS accuracy in meters
+  accuracy?: number; 
 }
 
 export interface AppState {
@@ -35,10 +35,33 @@ export interface OfficeLocation {
   Radius: number;
   Code: string;
   Status: boolean;
+  fullname?: string;
 }
 
 export interface GetUserLocationResponse {
   successCode: number;
   message: string;
   data: OfficeLocation[];
+}
+
+export interface AttendanceRecord {
+  type: 'IN' | 'OUT';
+  created_at: string;
+  [key: string]: unknown; // Allow other fields without exposing them
+}
+
+export interface GetAttendanceDataResponse {
+  successCode: number;
+  message: string;
+  data: AttendanceRecord[];
+}
+
+
+export interface OfficeLocation {
+  Code: string;
+  Name: string;
+  Radius: number;
+  Latitude: string;
+  Longitude: string;
+  fullname?: string;
 }

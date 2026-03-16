@@ -7,6 +7,10 @@ interface LastClockInfoProps {
 
 export function LastClockInfo({ lastClockTime, isLoading = false }: LastClockInfoProps) {
   const formatTime = (date: Date) => {
+    // Validate that the date is finite and valid
+    if (!date || isNaN(date.getTime())) {
+      return 'Invalid Date';
+    }
     return new Intl.DateTimeFormat('id-ID', {
       dateStyle: 'medium',
       timeStyle: 'short',
@@ -26,7 +30,7 @@ export function LastClockInfo({ lastClockTime, isLoading = false }: LastClockInf
     <div className="flex items-center gap-2 text-muted-foreground text-sm">
       <Clock className="w-4 h-4" />
       <span>
-        Presensi Terakhir: {lastClockTime ? formatTime(lastClockTime) : 'Belum ada'}
+        Presensi Terakhir: {lastClockTime && !isNaN(lastClockTime.getTime()) ? formatTime(lastClockTime) : 'Belum ada'}
       </span>
     </div>
   );

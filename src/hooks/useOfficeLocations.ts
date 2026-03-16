@@ -19,16 +19,12 @@ export function useOfficeLocations(employeeId: string) {
         if (response.successCode === 200 && response.data) {
           setLocations(response.data);
 
-          // Try to restore last used location from localStorage
           const lastLocationId = localStorage.getItem(LAST_LOCATION_KEY);
           let locationToSelect: OfficeLocation | null = null;
 
           if (lastLocationId) {
-            // Find the last used location in the current list
             locationToSelect = response.data.find((loc) => loc.Id === Number(lastLocationId)) || null;
           }
-
-          // If no last location or it's not in the list, select first active location
           if (!locationToSelect) {
             locationToSelect = response.data.find((loc) => loc.Status) || null;
           }
@@ -51,7 +47,6 @@ export function useOfficeLocations(employeeId: string) {
     }
   }, [employeeId]);
 
-  // Save selected location to localStorage whenever it changes
   const handleSetSelectedLocation = (location: OfficeLocation | null) => {
     setSelectedLocation(location);
     if (location) {

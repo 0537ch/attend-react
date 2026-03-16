@@ -1,11 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getAttendanceData } from '../services/attendanceApi';
-
-interface AttendanceRecord {
-  type: 'IN' | 'OUT';
-  timestamp: string;
-  [key: string]: unknown;
-}
+import type { AttendanceRecord } from '@/types/attendance';
 
 export function useAttendanceHistory(employeeId: string) {
   const [clockStatus, setClockStatus] = useState<'in' | 'out'>('out');
@@ -13,7 +8,7 @@ export function useAttendanceHistory(employeeId: string) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
     if (!employeeId) {
       setIsLoading(false);
       return;
@@ -32,9 +27,14 @@ export function useAttendanceHistory(employeeId: string) {
           // Get the last record
           const lastRecord = records[records.length - 1];
           setClockStatus(lastRecord.type.toLowerCase() as 'in' | 'out');
-          setLastClockTime(new Date(lastRecord.timestamp));
+          const parsedDate = new Date(lastRecord.created_at);
+          // Validate the date is valid before setting
+          if (!isNaN(parsedDate.getTime())) {
+            setLastClockTime(parsedDate);
+          } else {
+            setLastClockTime(null);
+          }
         } else {
-          // No records yet - employee hasn't clocked in before
           setClockStatus('out');
           setLastClockTime(null);
         }
@@ -42,15 +42,14 @@ export function useAttendanceHistory(employeeId: string) {
     } catch (err) {
       console.error('Failed to fetch attendance history:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch attendance history');
-      // Don't change state on error, keep current values
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [employeeId]);
 
   useEffect(() => {
     fetchHistory();
-  }, [employeeId]);
+  }, [employeeId, fetchHistory]);
 
   return {
     clockStatus,
