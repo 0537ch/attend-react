@@ -50,7 +50,7 @@ export function LocationSelector({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
-            className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background/40 text-foreground min-h-[48px] sm:min-h-[44px] flex items-center justify-between"
+            className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background/40 text-foreground min-h-12 sm:min-h-11 flex items-center justify-between"
           >
             <span className="flex-1 text-left">
               {selectedLocation
@@ -60,7 +60,7 @@ export function LocationSelector({
             <ChevronDown className="w-4 h-4 opacity-50 ml-2" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-full !min-w-0">
+        <DropdownMenuContent align="start" className="w-full min-w-0!">
           <DropdownMenuRadioGroup value={selectedLocation?.Id?.toString() || ''}>
             {!selectedLocation && (
               <div className="px-3 py-2 text-sm text-foreground/70">

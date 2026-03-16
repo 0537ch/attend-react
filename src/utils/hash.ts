@@ -1,11 +1,5 @@
 import bcrypt from 'bcryptjs';
 
-/**
- * Hashes a password using bcrypt algorithm with key from environment variables as salt
- * @param password - The password to hash
- * @returns The bcrypt hashed password (synchronous & consistent)
- * @throws Error - If the salt key is not found in environment variables
- */
 export const hashPassword = (password: string): string => {
   const saltKey = import.meta.env.VITE_BCRYPT_SALT;
 

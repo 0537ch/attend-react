@@ -12,13 +12,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(authManager.isAuthenticated());
 
   useEffect(() => {
+    const refreshAuthToken = async () => {
+      const currentState = authManager.getState();
+
+      // Only refresh if user is logged in
+      if (currentState.token) {
+        try {
+          const newSystemToken = await getSystemToken();
+
+          // Update the token with the same user data and expiry
+          authManager.setAuth(
+            newSystemToken,
+            currentState.user,
+            currentState.tokenExpiry
+          );
+        } catch (error) {
+          console.error('Failed to refresh token:', error);
+        }
+      }
+    };
+
+    refreshAuthToken();
+
+    // Subscribe to auth state changes
     const unsubscribe = authManager.subscribe((state) => {
       setToken(state.token);
       setUser(state.user);
       setIsAuthenticated(!!state.token);
     });
 
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const login = async (employeeId: string, password: string) => {

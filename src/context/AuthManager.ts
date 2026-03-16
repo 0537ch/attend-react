@@ -58,7 +58,23 @@ class AuthManager {
 
   isAuthenticated(): boolean {
     const state = this.loadFromStorage();
-    return !!state.token;
+
+    // Check if token exists
+    if (!state.token) {
+      return false;
+    }
+
+    // Check if token is expired
+    if (state.tokenExpiry) {
+      const expiryDate = new Date(state.tokenExpiry);
+      if (expiryDate < new Date()) {
+        // Token expired, clear it
+        this.clearAuth();
+        return false;
+      }
+    }
+
+    return true;
   }
 
   getTokenExpiry(): string | null {
@@ -66,7 +82,7 @@ class AuthManager {
     return state.tokenExpiry;
   }
 
-  setAuth(token: string, user: UserData, tokenExpiry: string | null = null) {
+  setAuth(token: string, user: UserData | null, tokenExpiry: string | null = null) {
     const state = {
       token,
       user,

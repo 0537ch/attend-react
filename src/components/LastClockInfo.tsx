@@ -7,7 +7,6 @@ interface LastClockInfoProps {
 
 export function LastClockInfo({ lastClockTime, isLoading = false }: LastClockInfoProps) {
   const formatTime = (date: Date) => {
-    // Validate that the date is finite and valid
     if (!date || isNaN(date.getTime())) {
       return 'Invalid Date';
     }

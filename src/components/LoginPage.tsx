@@ -28,13 +28,10 @@ export function LoginPage() {
     setIsLoading(true);
 
     try {
-      // Step 1: Validate user ID + password with API
-      // Step 2: Get system token from MAGANG (background)
       await login(username, password);
 
       showToast('Login berhasil!', 'success');
 
-      // Redirect to attendance page after short delay
       setTimeout(() => {
         navigate('/');
       }, 500);
@@ -45,7 +42,6 @@ export function LoginPage() {
     }
   };
 
-  // Redirect if already authenticated
   if (isAuthenticated) {
     navigate('/');
     return null;
@@ -56,15 +52,12 @@ export function LoginPage() {
       className="min-h-screen bg-cover bg-center bg-fixed bg-no-repeat relative flex items-center justify-center"
       style={{ backgroundImage: "url('/TPS2.jpg')" }}
     >
-      {/* Dark overlay for better card contrast */}
       <div className="absolute inset-0 bg-background/40 backdrop-blur-[1px]" />
 
-      {/* Theme Toggle - Absolute Position */}
       <div className="absolute top-4 right-4 z-20">
         <ThemeToggle />
       </div>
 
-      {/* Content wrapper with relative positioning */}
       <div className="relative z-10 w-full px-4 py-6 sm:px-6 sm:py-8">
         <div className="w-full max-w-md mx-auto">
         {/* Header */}
@@ -74,8 +67,8 @@ export function LoginPage() {
 
         {/* Login Card */}
         <div className="
-          !bg-background/60
-          !backdrop-blur-sm
+          bg-background/60!
+          backdrop-blur-sm!
           border-2 border-white/20 dark:border-white/10
           text-card-foreground rounded-lg shadow-xl p-6 sm:p-8 lg:p-10
         ">
@@ -124,7 +117,7 @@ export function LoginPage() {
                 relative w-full text-base font-bold py-2 px-7 rounded-2xl
                 transition-all duration-150 ease-in-out
                 ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer active:scale-[0.98]'}
-                bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 text-foreground
+                bg-linear-to-br from-blue-500 via-blue-600 to-blue-700 text-foreground
                 shadow-[0_8px_0_0,0_12px_0_0,0_16px_0_rgba(0,0,0,0.1)]
                 hover:shadow-[0_12px_0_0,0_16px_0_0,0_20px_0_rgba(0,0,0,0.15)]
                 active:shadow-[0_2px_0_0,0_4px_0_0,0_6px_0_rgba(0,0,0,0.1)]
@@ -136,7 +129,7 @@ export function LoginPage() {
               }}
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
-                {isLoading ? 'Memproses...' : 'Login'}
+                {isLoading ? 'Loading...' : 'Login'}
               </span>
             </button>
           </form>
