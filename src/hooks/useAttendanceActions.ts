@@ -81,19 +81,30 @@ export function useAttendanceActions(
 
     setIsLoading(true);
     try {
-      const formData = new FormData();
-      formData.append('image', capturedPhoto);
-      formData.append('id_number', employeeId);
-      formData.append('mock_apps', 'attend-react-app');
-      formData.append('code', selectedLocation.Code);
-      formData.append('type', pendingAction);
-      formData.append('mock_status', 'true');
-      formData.append('mac_address', '00:00:00:00:00:00');
-
+      // Send as JSON (backend doesn't support FormData yet)
       await apiClient.post(
         import.meta.env.VITE_API_INSERT_ABSEN_ENDPOINT,
-        formData
+        {
+          id_number: employeeId,
+          mock_apps: 'attend-react-app',
+          code: selectedLocation.Code,
+          type: pendingAction,
+          mock_status: 'true',
+          mac_address: '00:00:00:00:00:00',
+        },
+        { timeout: 120000 }
       );
+
+      // TODO: Use FormData when backend supports it
+      // const formData = new FormData();
+      // formData.append('image', capturedPhoto);
+      // formData.append('id_number', employeeId);
+      // formData.append('mock_apps', 'attend-react-app');
+      // formData.append('code', selectedLocation.Code);
+      // formData.append('type', pendingAction);
+      // formData.append('mock_status', 'true');
+      // formData.append('mac_address', '00:00:00:00:00:00');
+      // await apiClient.post(import.meta.env.VITE_API_INSERT_ABSEN_ENDPOINT, formData, { timeout: 120000 });
 
       showToast(`Berhasil absen ${pendingAction === 'IN' ? 'masuk' : 'keluar'}!`, 'success');
       closeModal();
