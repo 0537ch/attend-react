@@ -37,7 +37,7 @@ function AttendancePage() {
     setToast({ message, type, key: Date.now() });
   };
 
-  const { capturedPhoto, photoPreview, isModalOpen, pendingAction, isLoading: isSubmitting, handleClockClick, handlePhotoSelect, handleConfirm, handleRetake, handleCancel, fileInputRef } = useAttendanceActions(selectedLocation, employeeId, refetch, showToast);
+  const { photoPreview, isModalOpen, pendingAction, isLoading: isSubmitting, handleClockClick, handlePhotoSelect, handleConfirm, handleRetake, handleCancel, fileInputRef } = useAttendanceActions(selectedLocation, employeeId, refetch, showToast);
 
   const fullname = !isLoadingLocations && locations.length > 0 ? (locations[0]?.fullname?.trim() ?? '') : '';
 
