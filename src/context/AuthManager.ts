@@ -104,7 +104,6 @@ class AuthManager {
 
   subscribe(listener: (state: AuthState) => void): () => void {
     this.listeners.add(listener);
-    // Immediately notify with current state
     listener(this.loadFromStorage());
     return () => {
       this.listeners.delete(listener);
@@ -116,5 +115,4 @@ class AuthManager {
   }
 }
 
-// Export singleton instance
 export const authManager = new AuthManager();
