@@ -24,11 +24,9 @@ export function useAttendanceHistory(employeeId: string) {
         const records = response.data as AttendanceRecord[];
 
         if (records.length > 0) {
-          // Get the last record
           const lastRecord = records[records.length - 1];
           setClockStatus(lastRecord.type.toLowerCase() as 'in' | 'out');
           const parsedDate = new Date(lastRecord.created_at);
-          // Validate the date is valid before setting
           if (!isNaN(parsedDate.getTime())) {
             setLastClockTime(parsedDate);
           } else {

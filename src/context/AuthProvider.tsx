@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
           const newSystemToken = await getSystemToken();
 
-          // Update the token with the same user data and expiry
           authManager.setAuth(
             newSystemToken,
             currentState.user,

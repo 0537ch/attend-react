@@ -64,11 +64,9 @@ class AuthManager {
       return false;
     }
 
-    // Check if token is expired
     if (state.tokenExpiry) {
       const expiryDate = new Date(state.tokenExpiry);
       if (expiryDate < new Date()) {
-        // Token expired, clear it
         this.clearAuth();
         return false;
       }

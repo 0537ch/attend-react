@@ -5,7 +5,7 @@ export function calculateDistance(
   loc1: Location,
   loc2: Location
 ): number {
-  const R = 6371e3; // Earth's radius in meters
+  const R = 6371e3; 
   const phi1 = (loc1.lat * Math.PI) / 180;
   const phi2 = (loc2.lat * Math.PI) / 180;
   const diffLat = ((loc2.lat - loc1.lat) * Math.PI) / 180;

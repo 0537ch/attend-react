@@ -8,7 +8,6 @@ interface IconDefaultProto {
   _getIconUrl?: () => string;
 }
 
-// Fix for default marker icons in Leaflet
 delete (L.Icon.Default.prototype as IconDefaultProto)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
@@ -51,7 +50,6 @@ export function MapView({ userLocation, selectedOffice }: MapViewProps) {
   const officeLocation = officeLocationToLocation(selectedOffice);
   const radius = selectedOffice.Radius;
 
-  // Calculate center point between user and office
   const center = userLocation
     ? {
         lat: (userLocation.lat + officeLocation.lat) / 2,

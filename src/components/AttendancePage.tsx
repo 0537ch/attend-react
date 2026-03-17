@@ -19,7 +19,6 @@ function AttendancePage() {
   const navigate = useNavigate();
   const employeeId = (user?.id as string) || '';
 
-  // Data Hooks
   const { locations, selectedLocation, setSelectedLocation, isLoading: isLoadingLocations } = useOfficeLocations(employeeId);
   const { userLocation, distance, isInRange, isLoading: isLoadingLocation, gpsAccuracy } = useLocationManager(selectedLocation);
   const { clockStatus, lastClockTime, isLoading: isLoadingHistory, refetch } = useAttendanceHistory(employeeId);
