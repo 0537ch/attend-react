@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthProvider';
-import { LoginPage } from './components/LoginPage';
-import { AttendancePage } from './components/AttendancePage';
+import { LoginPage } from './pages/LoginPage';
+import { AttendancePage } from './pages/AttendancePage';
 
 function App() {
   const { isAuthenticated } = useAuth();

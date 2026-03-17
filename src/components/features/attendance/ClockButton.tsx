@@ -12,11 +12,12 @@ export function ClockButton({ clockStatus, isInRange, isLoading, onClock, disabl
   const isDisabled = (!isInRange && clockStatus === 'out') || disabled;
 
   return (
-  <div className='flex gap-4'>
+  <div className='flex gap-4 animate-in fade-in duration-300'>
     <button
       disabled={isDisabled || isLoading}
       onClick={() => onClock('IN')}
       className={`
+        animate-in fade-in slide-in-from-bottom-2 duration-300
         relative w-full min-h-13 sm:min-h-12
         text-base sm:text-lg font-bold
         py-4 sm:py-5 px-6 sm:px-7 rounded-2xl
@@ -51,6 +52,7 @@ export function ClockButton({ clockStatus, isInRange, isLoading, onClock, disabl
       disabled={isDisabled || isLoading}
       onClick={() => onClock('OUT')}
       className={`
+        animate-in fade-in slide-in-from-bottom-2 duration-300 delay-100
         relative w-full min-h-13 sm:min-h-12
         text-base sm:text-lg font-bold
         py-4 sm:py-5 px-6 sm:px-7 rounded-2xl

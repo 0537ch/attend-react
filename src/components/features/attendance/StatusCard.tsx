@@ -1,4 +1,4 @@
-import { MapPin, CheckCircle, XCircle, Loader2, Crosshair } from 'lucide-react';
+import { MapPin, CheckCircle, XCircle, Loader2 } from 'lucide-react';
 
 interface StatusCardProps {
   distance: number;
@@ -6,10 +6,9 @@ interface StatusCardProps {
   isLoading: boolean;
   radius: number;
   officeName: string;
-  gpsAccuracy?: number | null;
 }
 
-export function StatusCard({ distance, isInRange, isLoading, radius, officeName, gpsAccuracy }: StatusCardProps) {
+export function StatusCard({ distance, isInRange, isLoading, radius, officeName }: StatusCardProps) {
   if (isLoading) {
     return (
       <div className="animate-pulse">
@@ -20,18 +19,6 @@ export function StatusCard({ distance, isInRange, isLoading, radius, officeName,
       </div>
     );
   }
-
-  const getAccuracyColor = (accuracy: number) => {
-    if (accuracy < 10) return 'text-green-600 dark:text-green-400';
-    if (accuracy < 30) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-orange-600 dark:text-orange-400';
-  };
-
-  const getAccuracyLabel = (accuracy: number) => {
-    if (accuracy < 10) return 'Sangat Akurat';
-    if (accuracy < 30) return 'Cukup Akurat';
-    return 'Kurang Akurat';
-  };
 
   return (
     <div className={`
@@ -49,18 +36,6 @@ export function StatusCard({ distance, isInRange, isLoading, radius, officeName,
           Jarak: <span className="font-semibold">{Math.round(distance)}m</span> dari {officeName}
         </span>
       </div>
-
-      {/* GPS Accuracy */}
-      {gpsAccuracy !== undefined && gpsAccuracy !== null && (
-        <div className="flex items-center gap-2">
-          <Crosshair className="w-5 h-5 text-muted-foreground" />
-          <span className="text-sm sm:text-base text-foreground">
-            Akurasi GPS: <span className={`font-semibold ${getAccuracyColor(gpsAccuracy)}`}>
-              ±{Math.round(gpsAccuracy)}m ({getAccuracyLabel(gpsAccuracy)})
-            </span>
-          </span>
-        </div>
-      )}
 
       {/* Status */}
       <div className="flex items-center gap-2">

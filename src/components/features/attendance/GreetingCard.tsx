@@ -1,6 +1,6 @@
 import { Sun, CloudSun, Moon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { TextGenerateEffect } from './ui/text-generate-effect';
+import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
 
 type GreetingIcon = typeof Sun;
 

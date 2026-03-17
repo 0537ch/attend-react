@@ -65,3 +65,9 @@ export interface OfficeLocation {
   Longitude: string;
   fullname?: string;
 }
+
+export interface PhotoState {
+  capturedPhoto: File | null;
+  photoPreview: string | null;
+  isPhotoTaken: boolean;
+}

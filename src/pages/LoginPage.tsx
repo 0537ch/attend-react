@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthProvider';
-import { Toast } from './Toast';
-import { ThemeToggle } from './ThemeToggle';
+import { Toast } from '@/components/common/Toast';
+import { ThemeToggle } from '@/components/common/ThemeToggle';
 
 export function LoginPage() {
   const [username, setUsername] = useState('');

@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom"
 
 import "./index.css"
 import App from "./App.tsx"
-import { ThemeProvider } from "@/components/theme-provider.tsx"
+import { ThemeProvider } from "@/components/providers/theme-provider"
 import { AuthProvider } from "@/context/AuthProvider"
 
 createRoot(document.getElementById("root")!).render(
